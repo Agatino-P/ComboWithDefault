@@ -40,19 +40,19 @@ namespace ComboBoxWithDefaultProj
             {
                 return;
             }
-            cbwd.Value = e.NewValue.ToString();
+            cbwd.DoubleValue = (double)e.NewValue;
         }
 
        
-        public string Value
+        public double DoubleValue
         {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get { return (double)GetValue(DoubleValueProperty); }
+            set { SetValue(DoubleValueProperty, value); }
         }
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(string), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnValueChanged));
+        public static readonly DependencyProperty DoubleValueProperty =
+            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d, OnDoubleValueChanged));
 
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDoubleValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var a = e.NewValue;
         }
@@ -71,14 +71,31 @@ namespace ComboBoxWithDefaultProj
             var a = e.NewValue;
         }
 
+
+
+
+        //public List<double> LocalValues
+        //{
+        //    get { return (List<double>)GetValue(LocalValuesProperty); }
+        //    set { SetValue(LocalValuesProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for LocalValues.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty LocalValuesProperty =
+        //    DependencyProperty.Register("LocalValues", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
+
+
+
         public ComboBoxWithDefault()
         {
             InitializeComponent();
+            DoubleValue = DefaultValue;
+            //LocalValues = new List<double>(new double[] { 1.1, 2.2, 3.3, 4.4 });
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            Value = DefaultValue.ToString();
+            DoubleValue = DefaultValue;
         }
     }
 }
