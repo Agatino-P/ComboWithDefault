@@ -14,12 +14,10 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding ElementName=CBWD, Path=Caption}" />
-        <ComboBox Grid.Column="1"
+        <ComboBox x:Name="cb" Grid.Column="1"
                   IsEditable="True"
                   ItemsSource="{Binding ElementName=CBWD, Path=Values}"
-                  SelectedItem="{Binding ElementName=CBWD, Path=SelectedItem}"
-                  SelectedValue="{Binding ElementName=CBWD, Path=SelectedValue}"
-                  Text="{Binding ElementName=CBWD, Path=TextValue}" />
+                  Text="{Binding ElementName=CBWD, Path=Value}" />
         <Button x:Name="Reset" Grid.Column="2"
                 Click="Reset_Click" Content="@" />
     </Grid>

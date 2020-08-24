@@ -16,17 +16,11 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <HeaderedContentControl Header="Default">
-                <TextBox Text="{Binding DefValue}" />
+            <HeaderedContentControl Header="DefaultValue">
+                <TextBox Text="{Binding DefaultValue}" />
             </HeaderedContentControl>
-            <HeaderedContentControl Header="SelectedItem">
-                <TextBox Text="{Binding SelectedItem}" />
-            </HeaderedContentControl>
-            <HeaderedContentControl Header="SelectedValue">
-                <TextBox Text="{Binding SelectedValue}" />
-            </HeaderedContentControl>
-            <HeaderedContentControl Header="TextValue">
-                <TextBox Text="{Binding TextValue}" />
+            <HeaderedContentControl Header="Value">
+                <TextBox Text="{Binding Value}" />
             </HeaderedContentControl>
 
             <TextBlock Text="Values" />
@@ -34,12 +28,11 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <cbwd:ComboBoxWithDefault Caption="Pick 1"
-                                      Default="{Binding DefValue}"
-                                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                      SelectedValue="{Binding SelectedValue, Mode=TwoWay}"
-                                      TextValue="{Binding TextValue, Mode=TwoWay}"
-                                      Values="{Binding Values}" />
+
+            <cbwd:ComboBoxWithDefault Caption="Pick one, or type"
+                                      DefaultValue="{Binding DefaultValue}"
+                                      Values="{Binding Values}"
+                                      Value="{Binding Value, Mode=OneWayToSource}" />
         </StackPanel>
     </Grid>
 </Window>

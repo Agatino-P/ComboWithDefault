@@ -11,8 +11,6 @@ namespace ComboBoxWithDefaultProj
     public partial class ComboBoxWithDefault : UserControl
     {
 
-
-
         public string Caption
         {
             get { return (string)GetValue(CaptionProperty); }
@@ -21,63 +19,57 @@ namespace ComboBoxWithDefaultProj
         public static readonly DependencyProperty CaptionProperty =
             DependencyProperty.Register("Caption", typeof(string), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
 
-        public object Default
+        public double DefaultValue
         {
-            get { return GetValue(DefaultProperty); }
-            set { SetValue(DefaultProperty, value); }
-        }
-        public static readonly DependencyProperty DefaultProperty =
-            DependencyProperty.Register("Default", typeof(object), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
-
-        public object SelectedItem
-        {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get { return (double)GetValue(DefaultValueProperty); }
+            set { SetValue(DefaultValueProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnSelectedItemChanged));
+        public static readonly DependencyProperty DefaultValueProperty =
+            DependencyProperty.Register("DefaultValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d, OnDefaultValueChanged));
 
-        private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDefaultValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var cbwd = d as ComboBoxWithDefault;
+            if (cbwd == null)
+            {
+                return;
+            }
+
+            if (! (e.NewValue is double))
+            {
+                return;
+            }
+            cbwd.Value = e.NewValue.ToString();
+        }
+
+       
+        public string Value
+        {
+            get { return (string)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(string), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnValueChanged));
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var a = e.NewValue;
         }
 
-
-        public object SelectedValue
+        public List<double> Values
         {
-            get { return (object)GetValue(SelectedValueProperty); }
-            set { SetValue(SelectedValueProperty, value); }
-        }
-        public static readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register("SelectedValue", typeof(object), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnSelectedValueChanged));
-
-        private static void OnSelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var a = e.NewValue;
-        }
-
-        public string TextValue
-        {
-            get { return (string)GetValue(TextValueProperty); }
-            set { SetValue(TextValueProperty, value); }
-        }
-        public static readonly DependencyProperty TextValueProperty =
-            DependencyProperty.Register("TextValue", typeof(string), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnTextValueChanged));
-
-        private static void OnTextValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var a = e.NewValue;
-        }
-
-        public IEnumerable<Object> Values
-        {
-            get { return (IEnumerable<Object>)GetValue(ValuesProperty); }
+            get { return (List<double>)GetValue(ValuesProperty); }
             set { SetValue(ValuesProperty, value); }
         }
 
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(IEnumerable<Object>), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
+            DependencyProperty.Register("Values", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnValuesChanged));
+
+        private static void OnValuesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var a = e.NewValue;
+        }
 
         public ComboBoxWithDefault()
         {
@@ -86,7 +78,7 @@ namespace ComboBoxWithDefaultProj
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            SelectedItem = Default;
+            Value = DefaultValue.ToString();
         }
     }
 }
