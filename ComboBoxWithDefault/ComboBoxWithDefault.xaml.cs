@@ -30,19 +30,11 @@ namespace ComboBoxWithDefaultProj
 
         private static void OnDefaultValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var cbwd = d as ComboBoxWithDefault;
-            if (cbwd == null)
-            {
+            var a = e.NewValue;
+            if (!(d is ComboBoxWithDefault cbwd))
                 return;
-            }
-
-            if (! (e.NewValue is double))
-            {
-                return;
-            }
-            cbwd.DoubleValue = (double)e.NewValue;
+            cbwd.DoubleValue = cbwd.DefaultValue;
         }
-
        
         public double DoubleValue
         {
@@ -50,8 +42,7 @@ namespace ComboBoxWithDefaultProj
             set { SetValue(DoubleValueProperty, value); }
         }
         public static readonly DependencyProperty DoubleValueProperty =
-            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d, OnDoubleValueChanged));
-
+            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDoubleValueChanged));
         private static void OnDoubleValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var a = e.NewValue;
@@ -62,35 +53,17 @@ namespace ComboBoxWithDefaultProj
             get { return (List<double>)GetValue(ValuesProperty); }
             set { SetValue(ValuesProperty, value); }
         }
-
         public static readonly DependencyProperty ValuesProperty =
             DependencyProperty.Register("Values", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnValuesChanged));
-
         private static void OnValuesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var a = e.NewValue;
         }
 
-
-
-
-        //public List<double> LocalValues
-        //{
-        //    get { return (List<double>)GetValue(LocalValuesProperty); }
-        //    set { SetValue(LocalValuesProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for LocalValues.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty LocalValuesProperty =
-        //    DependencyProperty.Register("LocalValues", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
-
-
-
         public ComboBoxWithDefault()
         {
             InitializeComponent();
             DoubleValue = DefaultValue;
-            //LocalValues = new List<double>(new double[] { 1.1, 2.2, 3.3, 4.4 });
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)

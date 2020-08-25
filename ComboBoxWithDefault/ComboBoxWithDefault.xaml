@@ -5,7 +5,8 @@
              xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:local="clr-namespace:ComboBoxWithDefaultProj"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Name="CBWD" d:DesignHeight="50" d:DesignWidth="200"
+             x:Name="CBWD"
+             d:DesignHeight="50" d:DesignWidth="200"
              Language="{Binding Source={x:Static glob:CultureInfo.CurrentCulture}, Path=Name, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"
              mc:Ignorable="d">
     <StackPanel>
@@ -16,12 +17,15 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding ElementName=CBWD, Path=Caption}" />
-            <ComboBox x:Name="cb" Grid.Column="1" IsEditable="True"
+            <ComboBox x:Name="cb" Grid.Column="1"
+                      IsEditable="True"
                       ItemsSource="{Binding ElementName=CBWD, Path=Values}"
-                      Text="{Binding ElementName=CBWD, Path=DoubleValue}" />
-            <Button x:Name="Reset" Grid.Column="2" Click="Reset_Click"
-                    Content="@" />
+                      Text="{Binding ElementName=CBWD, Path=DoubleValue, Mode=TwoWay}" />
+            <Button x:Name="Reset" Grid.Column="2"
+                    Click="Reset_Click" Content="@" />
         </Grid>
+        <TextBlock Text="{Binding ElementName=cb, Path=Text}" />
+        <TextBlock Text="{Binding ElementName=CBWD, Path=DoubleValue}" />
 
     </StackPanel>
 </UserControl>
