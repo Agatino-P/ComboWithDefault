@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ComboWithDefaultTestApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:cbwd="clr-namespace:ComboBoxWithDefaultProj;assembly=ComboBoxWithDefault"
+        xmlns:cbwd="clr-namespace:ComboBoxWithDefaultProj;assembly=ComboBoxWithDefaultProj"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ComboWithDefaultTestApp"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,30 +10,31 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel>
+        <StackPanel Margin="20">
             <HeaderedContentControl Header="DefaultValue">
                 <TextBox Text="{Binding DefaultValue}" />
             </HeaderedContentControl>
             <HeaderedContentControl Header="ValueTBox">
                 <TextBox Text="{Binding DoubleValue}" />
             </HeaderedContentControl>
-            <HeaderedContentControl Header="Direct Binding to Property">
-                <TextBox Text="{Binding ElementName=cbwd, Path=DoubleValue}" />
-            </HeaderedContentControl>
         </StackPanel>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="20">
 
-            <cbwd:ComboBoxWithDefault x:Name="cbwd"
-                                      Caption="Pick one, or type"
+            <cbwd:ComboBoxWithDefault Caption="Pick one, or type"
                                       DefaultValue="{Binding DefaultValue, Mode=OneTime}"
                                       DoubleValue="{Binding DoubleValue}"
+                                      ShowDefaultButton="True"
                                       Values="{Binding Values, Mode=OneTime}" />
         </StackPanel>
     </Grid>
+
+
 </Window>

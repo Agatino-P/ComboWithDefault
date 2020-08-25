@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace ComboBoxWithDefaultProj
 {
-    /// <summary>
-    /// Interaction logic for ComboBoxWithDefault.xaml
-    /// </summary>
     public partial class ComboBoxWithDefault : UserControl
     {
 
@@ -19,22 +16,23 @@ namespace ComboBoxWithDefaultProj
         public static readonly DependencyProperty CaptionProperty =
             DependencyProperty.Register("Caption", typeof(string), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
 
+        public bool ShowDefaultButton
+        {
+            get { return (bool)GetValue(ShowDefaultButtonProperty); }
+            set { SetValue(ShowDefaultButtonProperty, value); }
+        }
+        public static readonly DependencyProperty ShowDefaultButtonProperty =
+            DependencyProperty.Register("ShowDefaultButton", typeof(bool), typeof(ComboBoxWithDefault), new PropertyMetadata(true));
+
+
         public double DefaultValue
         {
             get { return (double)GetValue(DefaultValueProperty); }
             set { SetValue(DefaultValueProperty, value); }
         }
-
         public static readonly DependencyProperty DefaultValueProperty =
-            DependencyProperty.Register("DefaultValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d, OnDefaultValueChanged));
+            DependencyProperty.Register("DefaultValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d));
 
-        private static void OnDefaultValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var a = e.NewValue;
-            if (!(d is ComboBoxWithDefault cbwd))
-                return;
-            cbwd.DoubleValue = cbwd.DefaultValue;
-        }
        
         public double DoubleValue
         {
@@ -42,11 +40,23 @@ namespace ComboBoxWithDefaultProj
             set { SetValue(DoubleValueProperty, value); }
         }
         public static readonly DependencyProperty DoubleValueProperty =
-            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDoubleValueChanged));
-        private static void OnDoubleValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), 
+                new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, onDoubleValueChanged));
+
+        private static void onDoubleValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var a = e.NewValue;
+            if (!(d is ComboBoxWithDefault cbwd))
+                return;
+            cbwd.DifferentFromDefault = cbwd.DoubleValue != cbwd.DefaultValue;
         }
+
+        public bool DifferentFromDefault
+        {
+            get { return (bool)GetValue(DifferentFromDefaultProperty); }
+            set { SetValue(DifferentFromDefaultProperty, value); }
+        }
+        public static readonly DependencyProperty DifferentFromDefaultProperty =
+            DependencyProperty.Register("DifferentFromDefault", typeof(bool), typeof(ComboBoxWithDefault), new PropertyMetadata(false));
 
         public List<double> Values
         {
@@ -54,19 +64,15 @@ namespace ComboBoxWithDefaultProj
             set { SetValue(ValuesProperty, value); }
         }
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null, OnValuesChanged));
-        private static void OnValuesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var a = e.NewValue;
-        }
+            DependencyProperty.Register("Values", typeof(List<double>), typeof(ComboBoxWithDefault), new PropertyMetadata(null));
+
 
         public ComboBoxWithDefault()
         {
             InitializeComponent();
-            DoubleValue = DefaultValue;
         }
 
-        private void Reset_Click(object sender, RoutedEventArgs e)
+        private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             DoubleValue = DefaultValue;
         }

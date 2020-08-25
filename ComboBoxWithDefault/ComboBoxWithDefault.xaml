@@ -16,16 +16,38 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding ElementName=CBWD, Path=Caption}" />
-            <ComboBox x:Name="cb" Grid.Column="1"
-                      IsEditable="True"
-                      ItemsSource="{Binding ElementName=CBWD, Path=Values}"
-                      Text="{Binding ElementName=CBWD, Path=DoubleValue, Mode=TwoWay}" />
-            <Button x:Name="Reset" Grid.Column="2"
-                    Click="Reset_Click" Content="@" />
+            <TextBlock Margin="0,0,4,0" Text="{Binding ElementName=CBWD, Path=Caption}" />
+            <ComboBox Grid.Column="1" IsEditable="True" ItemsSource="{Binding ElementName=CBWD, Path=Values}">
+                <ComboBox.Text>
+                    <Binding ElementName="CBWD" Mode="TwoWay" Path="DoubleValue"
+                             ValidatesOnExceptions="True">
+                        <Binding.Converter>
+                            <local:SmartDoubleConverter />
+                        </Binding.Converter>
+                        <Binding.ValidationRules>
+                            <local:ParsableDoubleStringValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+            <Button x:Name="btnReset" Grid.Column="2"
+                    Click="btnReset_Click" Content="@">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=CBWD, Path=DifferentFromDefault}" Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=CBWD, Path=ShowDefaultButton}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
-        <TextBlock Text="{Binding ElementName=cb, Path=Text}" />
-        <TextBlock Text="{Binding ElementName=CBWD, Path=DoubleValue}" />
 
     </StackPanel>
 </UserControl>
