@@ -34,20 +34,20 @@ namespace ComboBoxWithDefaultProj
             DependencyProperty.Register("DefaultValue", typeof(double), typeof(ComboBoxWithDefault), new PropertyMetadata(0d));
 
        
-        public double DoubleValue
+        public double Value
         {
-            get { return (double)GetValue(DoubleValueProperty); }
-            set { SetValue(DoubleValueProperty, value); }
+            get { return (double)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
         }
-        public static readonly DependencyProperty DoubleValueProperty =
-            DependencyProperty.Register("DoubleValue", typeof(double), typeof(ComboBoxWithDefault), 
-                new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, onDoubleValueChanged));
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(double), typeof(ComboBoxWithDefault), 
+                new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, onValueChanged));
 
-        private static void onDoubleValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void onValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is ComboBoxWithDefault cbwd))
                 return;
-            cbwd.DifferentFromDefault = cbwd.DoubleValue != cbwd.DefaultValue;
+            cbwd.DifferentFromDefault = cbwd.Value != cbwd.DefaultValue;
         }
 
         public bool DifferentFromDefault
@@ -74,7 +74,7 @@ namespace ComboBoxWithDefaultProj
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            DoubleValue = DefaultValue;
+            Value = DefaultValue;
         }
     }
 }

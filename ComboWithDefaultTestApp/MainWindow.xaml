@@ -22,7 +22,7 @@
                 <TextBox Text="{Binding DefaultValue}" />
             </HeaderedContentControl>
             <HeaderedContentControl Header="ValueTBox">
-                <TextBox Text="{Binding DoubleValue}" />
+                <TextBox Text="{Binding Value}" />
             </HeaderedContentControl>
         </StackPanel>
 
@@ -30,9 +30,9 @@
 
             <cbwd:ComboBoxWithDefault Caption="Pick one, or type"
                                       DefaultValue="{Binding DefaultValue, Mode=OneTime}"
-                                      DoubleValue="{Binding DoubleValue}"
                                       ShowDefaultButton="True"
-                                      Values="{Binding Values, Mode=OneTime}" />
+                                      Values="{Binding Values, Mode=OneTime}"
+                                      Value="{Binding Value}" />
         </StackPanel>
     </Grid>
 

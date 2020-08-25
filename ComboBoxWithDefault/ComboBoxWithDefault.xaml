@@ -19,7 +19,7 @@
             <TextBlock Margin="0,0,4,0" Text="{Binding ElementName=CBWD, Path=Caption}" />
             <ComboBox Grid.Column="1" IsEditable="True" ItemsSource="{Binding ElementName=CBWD, Path=Values}">
                 <ComboBox.Text>
-                    <Binding ElementName="CBWD" Mode="TwoWay" Path="DoubleValue"
+                    <Binding ElementName="CBWD" Mode="TwoWay" Path="Value"
                              ValidatesOnExceptions="True">
                         <Binding.Converter>
                             <local:SmartDoubleConverter />
